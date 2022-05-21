@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'new_route.dart';
+import 'page_scaffold.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +35,29 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  void _openPage(BuildContext context, PageInfo page) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      if (!page.withScaffold) {
+        return page.builder(context);
+      }
+      return PageScaffold(
+        title: page.title,
+        body: page.builder(context),
+        padding: page.padding,
+      );
+    }));
+  }
+
+  List<Widget> _generateItem(BuildContext context, List<PageInfo> children) {
+    return children.map<Widget>((page) {
+      return ListTile(
+        title: Text(page.title),
+        trailing: Icon(Icons.keyboard_arrow_right),
+        onTap: () => _openPage(context, page),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,13 +65,13 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(20.0),
-        children: const <Widget>[
-          Text('I\'m dedicating every day to you'),
-          Text('Domestic life was never quite my style'),
-          Text('When you smile, you knock me out, I fall apart'),
-          Text('And I thought I was so smart'),
+        children: <Widget>[
+          ExpansionTile(
+            title: const Text('第一个Flutter应用'),
+            children: _generateItem(context, [
+              PageInfo('路由传值', (ctx) => NewRoute()),
+            ]),
+          ),
         ],
       ),
     );
