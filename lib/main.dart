@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'new_route.dart';
 import 'page_scaffold.dart';
+import 'routes/text.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,9 +17,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      routes: {
-        "new_page": (context) => NewRoute(),
-      },
     );
   }
 }
@@ -52,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return children.map<Widget>((page) {
       return ListTile(
         title: Text(page.title),
-        trailing: Icon(Icons.keyboard_arrow_right),
+        trailing: const Icon(Icons.keyboard_arrow_right),
         onTap: () => _openPage(context, page),
       );
     }).toList();
@@ -67,9 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView(
         children: <Widget>[
           ExpansionTile(
-            title: const Text('第一个Flutter应用'),
+            title: const Text("基础组件"),
             children: _generateItem(context, [
-              PageInfo('路由传值', (ctx) => NewRoute()),
+              PageInfo("文本及样式", (ctx) => const TextRoute()),
             ]),
           ),
         ],

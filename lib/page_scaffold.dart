@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class PageScaffold extends StatelessWidget {
-  PageScaffold({required this.title, required this.body, required this.padding});
+  const PageScaffold(
+      {Key? key,
+      required this.title,
+      required this.body,
+      required this.padding})
+      : super(key: key);
 
   final String title;
   final Widget body;
